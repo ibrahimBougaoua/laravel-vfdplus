@@ -2,9 +2,9 @@
 
 namespace IbrahimBougaoua\LaravelVfdplus;
 
+use IbrahimBougaoua\LaravelVfdplus\Commands\LaravelVfdplusCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use IbrahimBougaoua\LaravelVfdplus\Commands\LaravelVfdplusCommand;
 
 class LaravelVfdplusServiceProvider extends PackageServiceProvider
 {

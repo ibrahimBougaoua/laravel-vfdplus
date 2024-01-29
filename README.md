@@ -1,19 +1,12 @@
-# a system that sends electronic invoices/receipts to the TRA in real time receiving a validation response from the tax authority.
+# laravel VfdPlus
+VfdPlus Easy Fiscal Receipt Issuing,
+a system that sends electronic invoices/receipts to the TRA in real time receiving a validation response from the tax authority.
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v//laravel-vfdplus.svg?style=flat-square)](https://packagist.org/packages//laravel-vfdplus)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status//laravel-vfdplus/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com//laravel-vfdplus/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status//laravel-vfdplus/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com//laravel-vfdplus/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt//laravel-vfdplus.svg?style=flat-square)](https://packagist.org/packages//laravel-vfdplus)
+<a href="https://www.vfdplus.co.tz" target="_blank">www.vfdplus.co.tz</a>
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-vfdplus.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-vfdplus)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+<a href="https://www.vfdplus.co.tz" target="_blank">
+    <img src="https://www.vfdplus.co.tz/assets/img/vfd_img2.png" alt="Thumb" />
+</a>
 
 ## Installation
 
@@ -23,37 +16,86 @@ You can install the package via composer:
 composer require /laravel-vfdplus
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-vfdplus-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="laravel-vfdplus-config"
-```
-
 This is the contents of the published config file:
 
 ```php
 return [
+    'home' => 'https://app.vfdplus.co.tz/vfd-thirdparty-api/',
+    'post_fiscal_receipt' => 'post_fiscal_receipt',
+    'post_fiscal' => 'post_fiscal',
+    'serial_info' => 'serial_info',
+    'account_info' => 'account_info',
+    'vfdplus_api_key' => 'DEMO-KEY-0001',
+    'qrserver' => 'https://api.qrserver.com/v1/create-qr-code',
+    'verify' => 'https://verify.tra.go.tz/',
 ];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-vfdplus-views"
 ```
 
 ## Usage
 
-```php
-$laravelVfdplus = new IbrahimBougaoua\LaravelVfdplus();
-echo $laravelVfdplus->echoPhrase('Hello, IbrahimBougaoua!');
+Load Account Info
+``` 
+
+$loadCredentialInfo = new \IbrahimBougaoua\LaravelVfdplus\Actions\LoadPostedReceipt();
+$loadCredentialInfo->initData("ID","dghgfjghghjh");
+$loadCredentialInfo->load();
+$receipt = $loadCredentialInfo->getResponse();
+dd($receipt);
+```
+
+Load Account Info
+```  
+$loadCredentialInfo = new \IbrahimBougaoua\LaravelVfdplus\Actions\LoadAccountInfo();
+$loadCredentialInfo->loadInfo();
+$accountInfo = $loadCredentialInfo->getResponse();
+dd($accountInfo);
+```
+
+Load Credential Info
+```  
+$loadCredentialInfo = new \IbrahimBougaoua\LaravelVfdplus\Actions\LoadCredentialInfo();
+$loadCredentialInfo->loadInfo();
+$serialCode = $loadCredentialInfo->getSerialCode();
+dd($serialCode);
+```
+
+Post Fiscal Receipt
+```  
+$postFiscalReceipt = new \IbrahimBougaoua\LaravelVfdplus\Actions\PostFiscalReceipt();
+
+$postFiscalReceipt->initData($serialCode,"","","DC-DEMO.004","2022-06-04","02:43:37",);
+
+$postFiscalReceipt->setCustomerInfo("CASH","6","NIL","","","","");
+
+$postFiscalReceipt->setPaymentMethods([
+    [
+        "pmt_type" => "CASH",
+        "pmt_amount" => 10000.0
+    ]
+]);
+
+$postFiscalReceipt->setCartTotals(1,10000.0,10000.0,0.0);
+
+$postFiscalReceipt->setCartItems([
+    [
+      "vat_rate_code" => "A",
+      "vat_rate_id" => 1,
+      "item_name" => "VITUMBUA",
+      "item_barcode" => "-1",
+      "item_qty" => 10.0,
+      "usp" => 1000.0,
+      "sp" => 1000.0,
+      "unit_discount_perc" => 0.0,
+      "unit_discount_amt" => 0.0,
+      "total_item_discount" => 0.0
+    ]
+]);
+
+$postFiscalReceipt->setUserInfo(2,"grandx","TILL01");
+
+$response = $postFiscalReceipt->post();
+
+dd($response);
 ```
 
 ## Testing
