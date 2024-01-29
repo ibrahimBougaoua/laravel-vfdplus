@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace IbrahimBougaoua\LaravelVfdplus\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelVfdplusCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-vfdplus';
 
     public $description = 'My command';
 
