@@ -11,9 +11,9 @@ class LoadCredentialInfo
     public function loadInfo()
     {
         $client = new Client();
-    
+
         $response = $client->get(
-            config('vfdplus.home') . config('vfdplus.serial_info'), 
+            config('vfdplus.home').config('vfdplus.serial_info'),
             [
                 'headers' => [
                     'VFDPLUS-API-KEY' => config('vfdplus.vfdplus_api_key'),
@@ -21,7 +21,7 @@ class LoadCredentialInfo
                 ],
             ]
         );
-    
+
         $this->response = json_decode($response->getBody()->getContents(), true);
     }
 

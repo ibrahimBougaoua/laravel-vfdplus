@@ -2,9 +2,9 @@
 
 namespace IbrahimBougaoua\LaravelVfdplus\Tests;
 
+use IbrahimBougaoua\LaravelVfdplus\LaravelVfdplusServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use IbrahimBougaoua\LaravelVfdplus\LaravelVfdplusServiceProvider;
 
 class TestCase extends Orchestra
 {
