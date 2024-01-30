@@ -33,7 +33,7 @@ return [
 
 ## Usage
 
-Load Account Info
+Load Posted Receipt
 ``` 
 
 $loadCredentialInfo = new \IbrahimBougaoua\LaravelVfdplus\Actions\LoadPostedReceipt();
