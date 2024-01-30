@@ -13,7 +13,7 @@ a system that sends electronic invoices/receipts to the TRA in real time receivi
 You can install the package via composer:
 
 ```bash
-composer require /laravel-vfdplus
+composer require ibrahimbougaoua/laravel-vfdplus
 ```
 
 This is the contents of the published config file:
